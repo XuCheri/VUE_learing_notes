@@ -1,0 +1,36 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-06-07 23:48:45
+ * @LastEditTime: 2021-06-08 00:22:07
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \VUE_learing_notes\demo\demo.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <img v-bind:src="image" alt="">
+    </div>
+    <script src="./vue.min.js"></script>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                title: "My first vue app",
+                author: "cheri",
+                image: "https://img0.baidu.com/it/u=155346741,3953923104&fm=26&fmt=auto&gp=0.jpg"
+            },
+        })
+    </script>
+</body>
+
+</html>
