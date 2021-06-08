@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-07 23:48:45
- * @LastEditTime: 2021-06-08 00:22:07
+ * @LastEditTime: 2021-06-08 17:45:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\demo\demo.html
@@ -17,18 +17,42 @@
 </head>
 
 <body>
-    <div id="app">
-        <img v-bind:src="image" alt="">
-    </div>
+    <div id="app"></div>
     <script src="./vue.min.js"></script>
     <script>
-        var vm = new Vue({
-            el: "#app",
-            data: {
-                title: "My first vue app",
-                author: "cheri",
-                image: "https://img0.baidu.com/it/u=155346741,3953923104&fm=26&fmt=auto&gp=0.jpg"
+        var MyButton = {
+            data() {
+                return {
+                    count: 0,
+                };
             },
+            template: `<button @click = "count++">当前点击了{{count}}下</button>`,
+        };
+
+
+        var title = {
+            props: ["h1", "h2"],
+            template: `<div>
+                <h1>{{h1}}</h1><h2>{{h2}}</h2>
+                </div>`
+        }
+
+        // 全局注册
+        // Vue.component("btn", MyButton);
+
+        var vm = new Vue({
+            components: {
+                btn: MyButton,
+                tt: title,
+            },
+            el: "#app",
+            template: `<div>
+                <btn /><btn /><btn /><btn /><btn />
+                <tt h1 = "标题一" />
+                <tt h1 = "标题2" />
+                <tt h2 = "二级标题1" />
+                <tt h1 = "都有" h2 = "二级标题2" />
+                </div>`
         })
     </script>
 </body>
