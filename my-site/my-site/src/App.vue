@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-08 20:42:19
- * @LastEditTime: 2021-06-09 00:20:13
+ * @LastEditTime: 2021-06-10 01:38:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\my-site\my-site\src\App.vue
@@ -9,31 +9,44 @@
 <template>
   <div>
     <h1>App组件</h1>
-    <Avatar
-      src="https://img2.baidu.com/it/u=860747650,3685523174&fm=26&fmt=auto&gp=0.jpg"
-      :size="100"
+    <Pager
+      :current="current"
+      :total="total"
+      :visibleNumber="10"
+      @pageChange="handlePageChange"
     />
-    <Icon type="home" />
-    <HelloWorld msg="vue" />
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue"
-import Avatar from "./components/Avatar.vue";
-import Icon from "./components/Icon.vue";
+import Pager from "./components/Pager.vue";
+
 export default {
+  data() {
+    return {
+      current: 7,
+      total: 300,
+    };
+  },
   components: {
-    Avatar,
-    Icon,
-    HelloWorld,
+    Pager,
+  },
+  methods: {
+    handlePageChange(newPage) {
+      if (newPage < 1) {
+        newPage = 1;
+      }
+      if (newPage >= this.total) {
+        newPage = this.total;
+      }
+      if(newPage === this.current){
+        return;
+      }
+      this.current = newPage;
+    },
   },
 };
 </script>
 
-<style>
-.iconfont {
-  font-size: 32px;
-  color: red;
-}
+<style scoped>
 </style>

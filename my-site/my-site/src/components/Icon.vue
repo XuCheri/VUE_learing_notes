@@ -1,13 +1,13 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-08 23:46:41
- * @LastEditTime: 2021-06-09 00:09:29
+ * @LastEditTime: 2021-06-09 16:10:23
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\my-site\my-site\src\components\icon.vue
 -->
 <template>
-  <i class="iconfont" :class="fontClass"></i>
+  <i class="iconfont icon-container" :class="fontClass"></i>
 </template>
 
 <script>
