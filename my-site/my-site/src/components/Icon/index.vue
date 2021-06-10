@@ -1,10 +1,10 @@
 <!--
  * @Author: your name
- * @Date: 2021-06-08 23:46:41
- * @LastEditTime: 2021-06-09 16:10:23
+ * @Date: 2021-06-10 20:41:37
+ * @LastEditTime: 2021-06-10 21:01:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \VUE_learing_notes\my-site\my-site\src\components\icon.vue
+ * @FilePath: \VUE_learing_notes\my-site\my-site\src\components\Icon\index.vue
 -->
 <template>
   <i class="iconfont icon-container" :class="fontClass"></i>
@@ -30,6 +30,7 @@ const classMap = {
   empty: "iconempty",
   chat: "iconliuyan",
 };
+export const types = Object.keys(classMap);
 export default {
   props: {
     type: {

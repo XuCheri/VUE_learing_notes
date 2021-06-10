@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-07 16:28:01
- * @LastEditTime: 2021-06-09 16:02:40
+ * @LastEditTime: 2021-06-10 20:24:34
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\README.md
@@ -532,4 +532,16 @@ computed: {
    注册事件：父组件申明，当子组件发生某件事的时候，自身将做出一些处理
 
 
+## 优化工程结构
+### 如何使用组件？
+
+编写组件说明文档
+
+```
+./src/components/README.md
+```
+
+### 如何测试组件效果？
+
+https://cli.vuejs.org/zh/guide/prototyping.html
 

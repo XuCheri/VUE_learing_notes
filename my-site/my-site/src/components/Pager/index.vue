@@ -1,10 +1,10 @@
 <!--
  * @Author: your name
- * @Date: 2021-06-09 16:06:33
- * @LastEditTime: 2021-06-10 01:26:06
+ * @Date: 2021-06-10 20:41:15
+ * @LastEditTime: 2021-06-10 20:45:33
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \VUE_learing_notes\my-site\my-site\src\components\Pager.vue
+ * @FilePath: \VUE_learing_notes\my-site\my-site\src\components\Pager\index.vue
 -->
 <template>
   <div class="pager-container" v-if="total > 1">
@@ -26,9 +26,7 @@
       :class="{ disabled: current === this.total }"
       >&gt;&gt;</a
     >
-    <a
-      @click="handleClick(total)"
-      :class="{ disabled: current === this.total }"
+    <a @click="handleClick(total)" :class="{ disabled: current === this.total }"
       >&gt;&gt;|</a
     >
   </div>
@@ -96,9 +94,9 @@ export default {
   justify-content: center;
   margin: 20px 0;
   a {
-    cursor: pointer;
     color: @primary;
     margin: 0 6px;
+    cursor: pointer;
     &.disabled {
       color: @lightWords;
       cursor: not-allowed;
