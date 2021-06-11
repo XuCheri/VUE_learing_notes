@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-10 20:41:37
- * @LastEditTime: 2021-06-10 21:01:36
+ * @LastEditTime: 2021-06-12 00:04:26
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\my-site\my-site\src\components\Icon\index.vue
@@ -48,4 +48,8 @@ export default {
 
 <style>
 @import "//at.alicdn.com/t/font_2164449_nalfgtq7il.css";
+.iconfont {
+  color: inherit;
+  font-size: inherit;
+}
 </style>
