@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-11 23:39:58
- * @LastEditTime: 2021-06-12 00:51:17
+ * @LastEditTime: 2021-06-14 23:10:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\my-site\my-site\src\components\Contact\index.vue
@@ -34,7 +34,7 @@
         <span>1156429007</span>
       </a>
       <div class="pop">
-        <img src="../../assets/qq.jpg" alt="" />
+        <img src="../../../assets/qq.jpg" alt="" />
       </div>
     </li>
     <li>
@@ -45,7 +45,7 @@
         <span>XuCheri0404</span>
       </a>
       <div class="pop">
-        <img src="../../assets/vx.jpg" alt="" />
+        <img src="../../../assets/vx.jpg" alt="" />
       </div>
     </li>
   </ul>
@@ -81,6 +81,7 @@ export default {
     }
   }
   a {
+    font-size: 14px;
     display: flex;
     align-items: center;
     cursor: pointer;
