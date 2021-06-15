@@ -1,30 +1,30 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-12 00:52:28
- * @LastEditTime: 2021-06-14 00:14:33
+ * @LastEditTime: 2021-06-15 16:31:21
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\my-site\my-site\src\components\Menu\index.vue
 -->
 <template>
   <nav class="menu-container">
-    <a
+    <Router-link
+      :exact="item.exact"
       v-for="item in items"
       :key="item.link"
-      :href="item.link"
-      :class="{
-        selected: isSelected(item),
-      }"
+      :to="{name:item.name}"
+      active-class="selected"
+      exact-active-class=""
     >
       <div class="icon">
         <Icon :type="item.icon" />
       </div>
       <span>{{ item.title }}</span>
-    </a>
+    </Router-link>
   </nav>
 </template>
 
-<script>
+<script> 
 import Icon from "@/components/Icon";
 export default {
   components: {
@@ -34,40 +34,37 @@ export default {
     return {
       items: [
         {
-          link: "/",
+          name: "Home",
           title: "首页",
           icon: "home",
+          exact: true,
         },
         {
-          link: "/blog",
+          name: "Blog",
           title: "文章",
           icon: "blog",
-          startWith: true,
+          exact: false,
         },
         {
-          link: "/about",
+          name: "About",
           title: "关于我",
           icon: "about",
+          exact: true,
         },
         {
-          link: "/project",
+          name: "Project",
           title: "项目&效果",
           icon: "code",
+          exact: true,
         },
         {
-          link: "/message",
+          name: "Message",
           title: "留言板",
           icon: "chat",
+          exact: true,
         },
       ],
     };
-  },
-  methods: {
-    isSelected(item) {
-      var link = item.link.toLowerCase();
-      var curPathname = location.pathname.toLowerCase();
-      return item.startWith ? curPathname.startsWith(link) : curPathname === link;
-    },
   },
 };
 </script>

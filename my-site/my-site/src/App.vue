@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-08 20:42:19
- * @LastEditTime: 2021-06-14 23:56:32
+ * @LastEditTime: 2021-06-15 15:37:30
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\my-site\my-site\src\App.vue
@@ -15,7 +15,7 @@
         </div>
       </template>
       <template>
-        中间主区域
+        <Router-view />  
       </template>
     </Layout>
   </div>
