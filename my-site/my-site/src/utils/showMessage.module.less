@@ -1,0 +1,34 @@
+@import "../styles/mixin.less";
+@import "../styles/var.less";
+.message{
+    .self-center(absolute);
+    z-index: 999;
+    border-radius: 5px;
+    box-shadow: -2px 2px 5px rgba(0, 0, 0, .5);
+    padding: 10px 30px;
+    line-height: 2;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    transition: .4s;
+    transform: translate(-50%,-505) translateY(15px);
+    opacity: 0;
+    white-space: nowrap;
+    &-info{
+        background-color: #0030a6;
+    }
+    &-success{
+        background-color: @success;
+    }
+    &-error{
+        background-color: @warn;
+    }
+    &-warn{
+        background-color: @danger;
+    }
+}
+
+.icon{
+    font-size: 20px;
+    margin-right: 7px;
+}
