@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-16 22:06:53
- * @LastEditTime: 2021-07-16 22:38:49
+ * @LastEditTime: 2021-07-17 18:16:34
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\my-site\my-site\src\views\Blog\components\BlogDetail.vue
@@ -12,7 +12,7 @@
     <div class="aside">
       <span>日期:{{ formatDate(blog.createDate) }}</span>
       <span>浏览:{{ blog.scanNumber }}</span>
-      <a href="">评论:{{ blog.commentNumber }}</a>
+      <a href="#data-form-container">评论:{{ blog.commentNumber }}</a>
       <a href="">{{ blog.category.name }}</a>
     </div>
     <div v-html="blog.htmlContent" class="markdown-body"></div>

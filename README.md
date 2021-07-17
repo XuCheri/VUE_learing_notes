@@ -1,16 +1,17 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-07 16:28:01
- * @LastEditTime: 2021-07-16 21:55:21
+ * @LastEditTime: 2021-07-17 13:27:03
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\README.md
 -->
-# VUE_learing_notes
+
+# VUE_learning_notes
 
 ## 前端框架的由来
 
-> vue官网：https://cn.vuejs.org/
+> vue官网：<https://cn.vuejs.org/>
 
 **服务端渲染**
 
@@ -141,8 +142,6 @@ vue通过以下逻辑生成vnode tree：
 
 <img src="http://mdrs.yuanjin.tech/img/20201106152046.png" style="zoom:40%;" />
 
-
-
 **注意：虚拟节点树必须是单根的**
 
 ### 挂载
@@ -157,8 +156,6 @@ vue通过以下逻辑生成vnode tree：
 ### 完整流程
 
 <img src="http://mdrs.yuanjin.tech/img/20200908051939.png" alt="image-20200908051939745" style="zoom:50%;" />
-
-
 
 组件的出现是为了实现以下两个目标：
 
@@ -201,8 +198,6 @@ var myComp = {
 - `data`必须是一个函数，该函数返回的对象作为数据
 - 由于没有`el`配置，组件的虚拟DOM树必须定义在`template`或`render`中
 
-
-
 #### 注册组件
 
 注册组件分为两种方式，一种是**全局注册**，一种是**局部注册**
@@ -230,12 +225,9 @@ Vue.component('my-comp', myComp)
 <my-comp></my-comp>
 ```
 
-
 > 但在一些工程化的大型项目中，很多组件都不需要全局使用。
 > 比如一个登录组件，只有在登录的相关页面中使用，如果全局注册，将导致构建工具无法优化打包
 > **因此，除非组件特别通用，否则不建议使用全局注册**
-
-
 
 ###### 局部注册
 
@@ -329,8 +321,6 @@ var OtherComp = {
 }
 ```
 
-
-
 ### 组件树
 
 一个组件创建好后，往往会在各种地方使用它。它可能多次出现在vue实例中，也可能出现在其他组件中。
@@ -384,13 +374,13 @@ var OtherComp = {
 
 <img src="http://mdrs.yuanjin.tech/img/2020-02-18-11-13-19.png" style="zoom:50%;" />
 
-
 ## 搭建工程
+
 ### 工程结构
 
 见代码
 
-> vue-cli: https://cli.vuejs.org/zh/
+> vue-cli: <https://cli.vuejs.org/zh/>
 
 ### vue-cli
 
@@ -412,7 +402,7 @@ var OtherComp = {
 
 ```html
 <template>
-	<!-- 组件模板代码 -->
+ <!-- 组件模板代码 -->
 </template>
 
 <script>
@@ -422,11 +412,9 @@ export default {
 </script>
 
 <style>
-	/* 组件样式 */
+ /* 组件样式 */
 </style>
 ```
-
-
 
 ### 预编译
 
@@ -440,6 +428,7 @@ export default {
 <img src="http://mdrs.yuanjin.tech/img/20201111155613.png" alt="image-20201111155613940" style="zoom:50%;" />
 
 ## 计算属性
+
 面试题：计算属性和方法有什么区别？
 
 ```
@@ -450,8 +439,6 @@ export default {
 由于有以上的这些区别，因此计算属性通常是根据已有数据得到其他数据，并在得到数据的过程中不建议使用异步、当前时间、随机数等副作用操作。
 实际上，他们最重要的区别是含义上的区别。计算属性含义上也是一个数据，可以读取也可以赋值；方法含义上是一个操作，用于处理一些事情。
 ```
-
-
 
 完整的计算属性书写：
 
@@ -479,6 +466,7 @@ computed: {
 ```
 
 ## 组件事件
+
 ### pager组件
 
 <img src="http://mdrs.yuanjin.tech/img/20201113130301.png" style="zoom:50%;" />
@@ -519,8 +507,6 @@ computed: {
    因此，在实际开发中，显示状态变化频繁的情况下应该使用v-show，以保持树的稳定；显示状态变化较少时应该使用v-if，以减少树的节点和渲染量。
    ```
 
-   
-
 3. **组件事件**
 
    <img src="http://mdrs.yuanjin.tech/img/20201113134557.png" alt="image-20201113134557175" style="zoom:40%;" />
@@ -531,8 +517,8 @@ computed: {
 
    注册事件：父组件申明，当子组件发生某件事的时候，自身将做出一些处理
 
-
 ## 优化工程结构
+
 ### 如何使用组件？
 
 编写组件说明文档
@@ -543,9 +529,10 @@ computed: {
 
 ### 如何测试组件效果？
 
-https://cli.vuejs.org/zh/guide/prototyping.html
+<https://cli.vuejs.org/zh/guide/prototyping.html>
 
 ## 插槽
+
 在某些组件的模板中，有一部分区域需要父组件来指定
 
 ```html
@@ -576,7 +563,7 @@ https://cli.vuejs.org/zh/guide/prototyping.html
 
 <!-- 父组件App -->
 <Message>
-	<div class="app-message">
+ <div class="app-message">
     <p>App Message</p>
     <a href="">detail</a>
   </div>
@@ -639,17 +626,15 @@ https://cli.vuejs.org/zh/guide/prototyping.html
 
 <img src="http://mdrs.yuanjin.tech/img/20201202153229.png" alt="image-20201202153229391" style="zoom:50%;" />
 
-
 ## 路由
-> vue-router官网：https://router.vuejs.org/zh/
+
+> vue-router官网：<https://router.vuejs.org/zh/>
 
 <img src="http://mdrs.yuanjin.tech/img/20201202170037.png" alt="image-20201202170037391" style="zoom:50%;" />
 
 1. **如何根据地址中的路径选择不同的组件？**
 2. **把选择的组件放到哪个位置？**
 3. **如何无刷新的切换组件？**
-
-
 
 ### 路由插件
 
@@ -683,12 +668,10 @@ const router = new VueRouter({
     // 当匹配到路径 /foo 时，渲染 Foo 组件
     { path: '/foo', component: Foo },
     // 当匹配到路径 /bar 时，渲染 Bar 组件
-  	{ path: '/bar', component: Bar }
+   { path: '/bar', component: Bar }
   ]
 })
 ```
-
-
 
 ```html
 <!-- App.vue -->
@@ -703,8 +686,6 @@ const router = new VueRouter({
   </div>
 </div>
 ```
-
-
 
 ### 路由模式
 
@@ -733,9 +714,9 @@ const router = new VueRouter({
 3. abstract：路由从内存中获取路径，改变路径也只是改动内存中的值。这种模式通常应用到非浏览器环境中。
 
    ```shell
-   内存： /			-->   /
-   内存： /about	--> /about
-   内存： /blog	  --> /blog
+   内存： /   -->   /
+   内存： /about --> /about
+   内存： /blog   --> /blog
    ```
 
 ### 导航
@@ -762,8 +743,6 @@ const router = new VueRouter({
 - 如果当前路径是以导航路径开头，则算作匹配，会为导航的a元素添加类名`router-link-active`
 - 如果当前路径完全等于导航路径，则算作精确匹配，会为导航的a元素添加类名`router-link-exact-active`
 
-
-
 例如，当前访问的路径是`/blog`，则：
 
 | 导航路径 | 类名                                          |
@@ -773,11 +752,7 @@ const router = new VueRouter({
 | /about   | 无                                            |
 | /message | 无                                            |
 
-
-
 可以为组件`RouterLink`添加bool属性`exact`，将匹配规则改为：必须要精确匹配才能添加匹配类名`router-link-active`
-
-
 
 例如，当前访问的路径是`/blog`，则：
 
@@ -797,11 +772,7 @@ const router = new VueRouter({
 | /about   | true  | 无                 |
 | /message | true  | 无                 |
 
-
-
 另外，可以通过`active-class`属性更改匹配的类名，通过`exact-active-class`更改精确匹配的类名
-
-
 
 ### 命名路由
 
@@ -814,7 +785,7 @@ const router = new VueRouter({
     // 当匹配到路径 /foo 时，渲染 Foo 组件
     { name:"foo", path: '/foo', component: Foo },
     // 当匹配到路径 /bar 时，渲染 Bar 组件
-  	{ name:"bar", path: '/bar', component: Bar }
+   { name:"bar", path: '/bar', component: Bar }
   ]
 })
 
@@ -824,7 +795,9 @@ const router = new VueRouter({
 <!-- 向to属性传递路由信息对象 RouterLink会根据你传递的信息以及路由配置生成对应的路径 -->
 <RouterLink :to="{ name:'foo' }">go to foo</RouterLink>
 ```
+
 ## 弹出消息
+
 ### 使用css module
 
 需要将样式文件命名为`xxx.module.ooo`
@@ -832,8 +805,6 @@ const router = new VueRouter({
 `xxx`为文件名
 
 `ooo`为样式文件后缀名，可以是`css`、`less`
-
-
 
 ### 得到组件渲染的Dom
 
@@ -850,8 +821,6 @@ function getComponentRootDom(comp, props){
 }
 ```
 
-
-
 ### 扩展vue实例
 
 <img src="http://mdrs.yuanjin.tech/img/20201203172154.jpg" alt="扩展vue实例" style="zoom:33%;" />
@@ -860,7 +829,7 @@ function getComponentRootDom(comp, props){
 
 ```html
 <template>
-	<div>
+ <div>
     <p ref="para">some paragraph</p>
     <ChildComp ref="comp" />
     <button @click="handleClick">查看所有引用</button>
@@ -869,7 +838,7 @@ function getComponentRootDom(comp, props){
 
 <script>
   import ChildComp from "./ChildComp"
-	export default {
+ export default {
     components:{
       ChildComp
     },
@@ -879,8 +848,8 @@ function getComponentRootDom(comp, props){
         console.log(this.$refs);
         /*
         {
-        	para: p元素（原生DOM）,
-        	comp: ChildComp的组件实例
+         para: p元素（原生DOM）,
+         comp: ChildComp的组件实例
         }
         */
       }
@@ -889,20 +858,19 @@ function getComponentRootDom(comp, props){
 </script>
 ```
 
-
-
 > 通过`ref`可以直接操作`dom`元素，甚至可能直接改动子组件，这些都不符合`vue`的设计理念。
 >
 > 除非迫不得已，否则不要使用`ref`
 
 ## 获取远程数据
+
 > 本节课内容和vue没有任何关系！
 >
-> vue cli: https://cli.vuejs.org/zh/
+> vue cli: <https://cli.vuejs.org/zh/>
 >
-> axios: https://github.com/axios/axios
+> axios: <https://github.com/axios/axios>
 >
-> mockjs：http://mockjs.com/
+> mockjs：<http://mockjs.com/>
 
 ### 远程获取数据的意义
 
@@ -1009,7 +977,7 @@ export default {
   data(){
     return {
       containerWidth:0,
-    	containerHeight:0
+     containerHeight:0
     }
   },
   mounted(){
@@ -1040,6 +1008,7 @@ export default {
 ```
 
 ## 首页part1
+
 `Home`组件负责呈现整体效果
 
 `CarouselItem`组件负责呈现单张轮播图
@@ -1141,7 +1110,7 @@ export default {
   // 导入当前组件需要用到的指令配置对象
   import mydirec1 from "@/directives/mydirec1";
   import mydirec2 from "@/directives/mydirec2";
-	export default {
+ export default {
     // 定义指令
     directives: {
       mydirec1,
@@ -1174,7 +1143,7 @@ export default {
 }
 ```
 
->  [查看更多的钩子函数](https://cn.vuejs.org/v2/guide/custom-directive.html#%E9%92%A9%E5%AD%90%E5%87%BD%E6%95%B0)
+> [查看更多的钩子函数](https://cn.vuejs.org/v2/guide/custom-directive.html#%E9%92%A9%E5%AD%90%E5%87%BD%E6%95%B0)
 
 每个钩子函数在调用时，`vue`都会向其传递一些参数，其中最重要的是前两个参数
 
@@ -1219,13 +1188,12 @@ function(el, bingding){
 }
 ```
 
-
-
 > 利用上述知识，可满足大部分自定义指令的需求
 >
 > 更多的自定义指令用法见[官网](https://cn.vuejs.org/v2/guide/custom-directive.html)
 
 ## 组件混入
+
 有的时候，许多组件有着类似的功能，这些功能代码分散在组件不同的配置中。
 
 ![image-20210105161811637](http://mdrs.yuanjin.tech/img/20210105161811.png)
@@ -1271,6 +1239,7 @@ const comp1 = {
 混入并不复杂，更多细节参见[官网](https://cn.vuejs.org/v2/guide/mixins.html)
 
 ## 文字列表页
+
 ### 文章列表页逻辑
 
 #### 路由跳转逻辑
@@ -1379,7 +1348,7 @@ export default {
       // newVal：this.$route.params 新的值，等同 this.$route.params
       // oldVal：this.$route.params 旧的值
     },
-  	// 完整写法
+   // 完整写法
     ["$route.params"]: {
       handler(newVal, oldVal){},
       deep: false, // 是否监听该数据内部属性的变化，默认 false
@@ -1388,7 +1357,9 @@ export default {
   }
 }
 ```
+
 ## 文章详情页
+
 ### 文章数据逻辑
 
 ![image-20210111142558879](http://mdrs.yuanjin.tech/img/20210111142558.png)
@@ -1411,8 +1382,6 @@ export default {
 import "highlight.js/styles/github.css";
 ```
 
-
-
 #### BlogTOC
 
 无难度，不解释
@@ -1421,5 +1390,95 @@ import "highlight.js/styles/github.css";
 
 下节课讲解
 
+## $listeners和v-model
 
+### 事件修饰符
 
+**针对`dom`节点的原生事件**，`vue`支持多种修饰符以简化代码
+
+详见：[事件修饰符、按键修饰符、系统修饰符](https://cn.vuejs.org/v2/guide/events.html#%E4%BA%8B%E4%BB%B6%E4%BF%AE%E9%A5%B0%E7%AC%A6)
+
+### $listeners
+
+`$listeners`是`vue`的一个实例属性，它用于获取父组件传过来的所有事件函数
+
+```html
+<!-- 父组件 -->
+<Child @event1="handleEvent1" @event2="handleEvent2" />
+```
+
+```js
+// 子组件
+this.$listeners // { event1: handleEvent1, event2: handleEvent2 }
+```
+
+> `$emit`和`$listeners`通信的异同
+>
+> 相同点：均可实现子组件向父组件传递消息
+>
+> 差异点：
+>
+> - `$emit`更加符合单向数据流，子组件仅发出通知，由父组件监听做出改变；而`$listeners`则是在子组件中直接使用了父组件的方法。
+> - 调试工具可以监听到子组件`$emit`的事件，但无法监听到`$listeners`中的方法调用。（想想为什么）
+> - 由于`$listeners`中可以获得传递过来的方法，因此调用方法可以得到其返回值。但`$emit`仅仅是向父组件发出通知，无法知晓父组件处理的结果
+
+> 对于上述中的第三点，可以在`$emit`中传递回调函数来解决
+>
+> 父组件：
+>
+> ```vue
+> <template>
+>  <Child @click="handleClick" />
+> </template>
+> 
+> <script>
+>   import Child from "./Child"
+>  export default {
+>     components:{
+>       Child
+>     },
+>     methods:{
+>       handleClick(data, callback){
+>         console.log(data); // 得到子组件事件中的数据
+>         setTimeout(()=>{
+>           callback(1); // 一段时间后，调用子组件传递的回调函数
+>         }, 3000)
+>       }
+>     }
+>   }
+> </script>
+> ```
+>
+> 子组件：
+>
+> ```vue
+> <template>
+>  <button @click="handleClick">
+>     click
+>   </button>
+> </template>
+> 
+> <script>
+>  export default {
+>     methods:{
+>       handleClick(){
+>         this.$emit("click", 123, (data)=>{
+>           console.log(data); // data为父组件处理完成后得到的数据
+>         })
+>       }
+>     }
+>   }
+> </script>
+> ```
+
+### v-model
+
+`v-model`指令实质是一个语法糖，它是`value`属性和`input`事件的*结合体*
+
+```html
+<input :value="data" @input="data=$event.target.value" />
+<!-- 等同于 -->
+<input v-model="data" />
+```
+
+详见：[表单输入绑定](https://cn.vuejs.org/v2/guide/forms.html)

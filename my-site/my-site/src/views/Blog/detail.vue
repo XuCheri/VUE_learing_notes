@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-16 18:21:42
- * @LastEditTime: 2021-07-16 22:56:32
+ * @LastEditTime: 2021-07-17 16:40:41
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\my-site\my-site\src\views\Blog\detail.vue
@@ -10,6 +10,7 @@
   <Layout>
     <div class="main-container" v-loading="isLoading">
       <BlogDetail :blog="data" v-if="data" />
+      <BlogComment v-if="!isLoading" />
     </div>
     <template #right>
       <div class="right-container" v-loading="isLoading">
@@ -25,11 +26,13 @@ import { getBlog } from "@/api/blog";
 import Layout from "@/components/Layout";
 import BlogDetail from "./components/BlogDetail";
 import BlogToc from "./components/BlogToc";
+import BlogComment from "./components/BlogComment"
 export default {
   components: {
     Layout,
     BlogDetail,
     BlogToc,
+    BlogComment,
   },
   mixins: [fetchData(null)],
   methods: {

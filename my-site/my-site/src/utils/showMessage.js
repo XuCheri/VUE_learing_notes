@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-11 08:56:02
- * @LastEditTime: 2021-07-11 16:02:55
+ * @LastEditTime: 2021-07-17 18:26:37
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\my-site\my-site\utils\showMessage.js
@@ -27,7 +27,6 @@ export default function (options = {}) {
     const iconDom = getComponentRootDom(Icon, {
         type
     })
-    console.log(iconDom);
     div.innerHTML = `<span class = "${styles.icon}">${iconDom.outerHTML}</span><div>${content}</div>`;
 
     // 类型样式名
@@ -38,7 +37,7 @@ export default function (options = {}) {
 
     // 将div加入到容器中
 
-    if (!options.container) {
+    if (options.container) {
         if (getComputedStyle(container).position === "static") {
             container.style.position = 'relative';
         }
