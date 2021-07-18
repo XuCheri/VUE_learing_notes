@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-15 08:13:08
- * @LastEditTime: 2021-07-16 00:06:11
+ * @LastEditTime: 2021-07-18 10:01:56
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\my-site\my-site\src\views\Blog\components\BlogCategory.vue
@@ -34,7 +34,6 @@ export default {
         (a, b) => a + b.articleCount,
         0
       );
-      console.log(totalArticalCount);
       const result = [
         { name: "全部", id: -1, articleCount: totalArticalCount },
         ...this.data,

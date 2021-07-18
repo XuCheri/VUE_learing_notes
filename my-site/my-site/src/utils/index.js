@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-11 12:32:27
- * @LastEditTime: 2021-07-15 22:52:03
+ * @LastEditTime: 2021-07-18 10:35:19
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\my-site\my-site\src\utils\index.js
@@ -17,4 +17,8 @@ from "./getComponentRootDom";
 export {
     default as formatDate
 }
-from "./formatDate"; 
+from "./formatDate";
+export {
+    default as debounce
+}
+from "./debounce"

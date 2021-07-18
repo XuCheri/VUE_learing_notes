@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-16 22:06:53
- * @LastEditTime: 2021-07-17 18:16:34
+ * @LastEditTime: 2021-07-18 10:46:49
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\my-site\my-site\src\views\Blog\components\BlogDetail.vue
@@ -13,7 +13,15 @@
       <span>日期:{{ formatDate(blog.createDate) }}</span>
       <span>浏览:{{ blog.scanNumber }}</span>
       <a href="#data-form-container">评论:{{ blog.commentNumber }}</a>
-      <a href="">{{ blog.category.name }}</a>
+      <RouterLink
+        :to="{
+          name: 'CategoryBlog',
+          params: {
+            categoryId: blog.category.id,
+          },
+        }"
+        >{{ blog.category.name }}</RouterLink
+      >
     </div>
     <div v-html="blog.htmlContent" class="markdown-body"></div>
   </div>
@@ -21,8 +29,8 @@
 
 <script>
 import { formatDate } from "@/utils";
-import "@/styles/markdown.css"
-import "highlight.js/styles/github.css"
+import "@/styles/markdown.css";
+import "highlight.js/styles/github.css";
 export default {
   props: {
     blog: {
@@ -46,7 +54,7 @@ export default {
     margin-right: 15px;
   }
 }
-.markdown-body{
-    margin: 2em 0;
+.markdown-body {
+  margin: 2em 0;
 }
 </style>

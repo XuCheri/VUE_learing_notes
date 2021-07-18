@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-06-08 20:42:19
- * @LastEditTime: 2021-07-16 18:24:58
+ * @LastEditTime: 2021-07-18 10:28:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\my-site\my-site\src\main.js
@@ -12,6 +12,7 @@ import "./styles/global.less";
 import router from "./router";
 import showMessage from "./utils/showMessage";
 import "./mock"
+import "./eventBus"
 // Vue.config.productionTip = false
 
 Vue.prototype.$showMessage = showMessage;

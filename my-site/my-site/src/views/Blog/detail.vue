@@ -1,14 +1,14 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-16 18:21:42
- * @LastEditTime: 2021-07-17 16:40:41
+ * @LastEditTime: 2021-07-18 10:50:54
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\my-site\my-site\src\views\Blog\detail.vue
 -->
 <template>
   <Layout>
-    <div class="main-container" v-loading="isLoading">
+    <div class="main-container" ref="mainContainer" v-loading="isLoading">
       <BlogDetail :blog="data" v-if="data" />
       <BlogComment v-if="!isLoading" />
     </div>
@@ -26,7 +26,7 @@ import { getBlog } from "@/api/blog";
 import Layout from "@/components/Layout";
 import BlogDetail from "./components/BlogDetail";
 import BlogToc from "./components/BlogToc";
-import BlogComment from "./components/BlogComment"
+import BlogComment from "./components/BlogComment";
 export default {
   components: {
     Layout,
@@ -39,6 +39,22 @@ export default {
     async fetchData() {
       return await getBlog(this.$route.params.id);
     },
+    handleScroll() {
+      this.$bus.$emit("mainScroll", this.$refs.mainContainer);
+    },
+  },
+  mounted() {
+    this.$refs.mainContainer.addEventListener("scroll", this.handleScroll);
+  },
+  destroyed() {
+    this.$refs.mainContainer.removeEventListener("scroll", this.handleScroll);
+  },
+  updated() {
+    const hash = location.hash;
+    location.hash = "";
+    setTimeout(() => {
+      location.hash = hash;
+    }, 50);
   },
 };
 </script>
