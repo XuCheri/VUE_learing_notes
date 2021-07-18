@@ -1,13 +1,13 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-10 20:41:15
- * @LastEditTime: 2021-06-10 20:45:33
+ * @LastEditTime: 2021-07-18 17:25:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\my-site\my-site\src\components\Pager\index.vue
 -->
 <template>
-  <div class="pager-container" v-if="total > 1">
+  <div class="pager-container" v-if="pageNumber > 1">
     <a @click="handleClick(1)" :class="{ disabled: current === 1 }"
       >|&lt;&lt;</a
     >
@@ -23,10 +23,10 @@
     >
     <a
       @click="handleClick(current + 1)"
-      :class="{ disabled: current === this.total }"
+      :class="{ disabled: current === pageNumber }"
       >&gt;&gt;</a
     >
-    <a @click="handleClick(total)" :class="{ disabled: current === this.total }"
+    <a @click="handleClick(total)" :class="{ disabled: current === pageNumber }"
       >&gt;&gt;|</a
     >
   </div>
@@ -66,8 +66,8 @@ export default {
     },
     visibleMax() {
       let max = this.visibleMin + this.visibleNumber - 1;
-      if (max > this.total) {
-        max = this.total;
+      if (max > this.pageNumber) {
+        max = this.pageNumber;
       }
       return max;
     },
@@ -81,6 +81,15 @@ export default {
   },
   methods: {
     handleClick(newPage) {
+      if (newPage < 1) {
+        newPage = 1;
+      }
+      if (newPage > this.pageNumber) {
+        newPage = this.pageNumber;
+      }
+      if (newPage === this.current) {
+        return;
+      }
       this.$emit("pageChange", newPage);
     },
   },

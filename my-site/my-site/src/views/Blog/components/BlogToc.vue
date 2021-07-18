@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-16 22:07:19
- * @LastEditTime: 2021-07-18 10:41:40
+ * @LastEditTime: 2021-07-18 16:38:17
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\my-site\my-site\src\views\Blog\components\BlogToc.vue
@@ -36,7 +36,10 @@ export default {
     handleSelect(item) {
       location.hash = item.anchor;
     },
-    setSelect() {
+    setSelect(scrollDom) {
+      if (!scrollDom) {
+        return;
+      }
       this.activeAnchor = "";
       const range = 200;
       for (const dom of this.doms) {

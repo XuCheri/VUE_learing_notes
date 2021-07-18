@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-16 18:21:42
- * @LastEditTime: 2021-07-18 10:50:54
+ * @LastEditTime: 2021-07-18 21:03:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\my-site\my-site\src\views\Blog\detail.vue
@@ -27,6 +27,7 @@ import Layout from "@/components/Layout";
 import BlogDetail from "./components/BlogDetail";
 import BlogToc from "./components/BlogToc";
 import BlogComment from "./components/BlogComment";
+import mainScroll from "@/mixins/mainScroll";
 export default {
   components: {
     Layout,
@@ -34,20 +35,11 @@ export default {
     BlogToc,
     BlogComment,
   },
-  mixins: [fetchData(null)],
+  mixins: [fetchData(null), mainScroll("mainContainer")],
   methods: {
     async fetchData() {
       return await getBlog(this.$route.params.id);
     },
-    handleScroll() {
-      this.$bus.$emit("mainScroll", this.$refs.mainContainer);
-    },
-  },
-  mounted() {
-    this.$refs.mainContainer.addEventListener("scroll", this.handleScroll);
-  },
-  destroyed() {
-    this.$refs.mainContainer.removeEventListener("scroll", this.handleScroll);
   },
   updated() {
     const hash = location.hash;
