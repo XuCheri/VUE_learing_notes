@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 08:55:24
- * @LastEditTime: 2021-07-18 10:23:01
+ * @LastEditTime: 2021-07-20 15:51:40
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\my-site\my-site\src\eventBus.js
@@ -37,5 +37,6 @@
 // }
 
 import Vue from "vue";
-Vue.prototype.$bus = new Vue({});
-// export default new Vue({});
+const app = new Vue({});
+Vue.prototype.$bus = app;
+export default app;
