@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-11 23:39:58
- * @LastEditTime: 2021-07-14 11:04:01
+ * @LastEditTime: 2021-07-22 22:41:35
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\my-site\my-site\src\components\Contact\index.vue
@@ -9,29 +9,29 @@
 <template>
   <ul class="contact-container">
     <li>
-      <a href="https://github.com/XuCheri">
+      <a target="_blank" :href="data.github">
         <div class="icon">
           <Icon type="github" />
         </div>
-        <span>CheriXu</span>
+        <span>{{data.githubName}}</span>
       </a>
     </li>
     <li>
-      <a href="mailto:xucheri@gmail.com">
+      <a :href="`mailto:${data.mail}`">
         <div class="icon">
           <Icon type="mail" />
         </div>
-        <span>xucheri@gmail.com</span>
+        <span>{{data.mail}}</span>
       </a>
     </li>
     <li>
       <a
-        href="tencent://message/?Menu=yes&uin=1156429007&Service=300&sigT=45a1e5847943b64c6ff3990f8a9e644d2b31356cb0b4ac6b24663a3c8dd0f8aa12a595b1714f9d45"
+        :href="`tencent://message/?Menu=yes&uin=${data.qq}&Service=300&sigT=45a1e5847943b64c6ff3990f8a9e644d2b31356cb0b4ac6b24663a3c8dd0f8aa12a595b1714f9d45`"
       >
         <div class="icon">
           <Icon type="qq" />
         </div>
-        <span>1156429007</span>
+        <span>{{data.qq}}</span>
       </a>
       <div class="pop">
         <img src="../../../assets/qq.jpg" alt="" />
@@ -42,7 +42,7 @@
         <div class="icon">
           <Icon type="weixin" />
         </div>
-        <span>XuCheri0404</span>
+        <span>{{data.weixin}}</span>
       </a>
       <div class="pop">
         <img src="../../../assets/vx.jpg" alt="" />
@@ -54,10 +54,12 @@
 <script>
 import "@/styles/global.less";
 import Icon from "@/components/Icon";
+import { mapState } from "vuex";
 export default {
   components: {
     Icon,
   },
+  computed: mapState("setting", ["data"]),
 };
 </script>
 

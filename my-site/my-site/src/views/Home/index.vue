@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-15 15:21:15
- * @LastEditTime: 2021-07-13 21:39:00
+ * @LastEditTime: 2021-07-22 21:54:18
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\my-site\my-site\src\views\Home\index.vue
@@ -9,7 +9,7 @@
 <template>
   <div
     class="home-container"
-    v-loading="isLoading"
+    v-loading="loading"
     ref="container"
     @wheel="handleWheel"
   >
@@ -47,12 +47,13 @@
 
 <script>
 import Carouselitem from "./Carouselitem";
-import { getBanners } from "@/api/banner";
 import Icon from "@/components/Icon";
-import fetchData from "@/mixins/fetchData.js";
+import { mapState } from "vuex";
 
 export default {
-  mixins: [fetchData([])],
+  created() {
+    this.$store.dispatch("banner/fetchBanner");
+  },
   components: {
     Carouselitem,
     Icon,
@@ -75,6 +76,7 @@ export default {
     marginTop() {
       return -this.index * this.containerHeight + "px";
     },
+    ...mapState("banner", ["loading", "data"]),
   },
   methods: {
     //切换轮播图
@@ -100,9 +102,6 @@ export default {
     },
     handleResize() {
       this.containerHeight = this.$refs.container.clientHeight;
-    },
-    async fetchData() {
-      return await getBanners();
     },
   },
 };

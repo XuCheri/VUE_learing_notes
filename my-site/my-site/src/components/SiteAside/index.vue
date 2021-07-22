@@ -1,25 +1,18 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-14 00:16:06
- * @LastEditTime: 2021-06-14 23:14:22
+ * @LastEditTime: 2021-07-22 22:58:13
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\my-site\my-site\src\components\SiteAside\index.vue
 -->
 <template>
-  <div class="siteAside-container">
-    <div class="avatar">
-      <Avatar
-        src="https://img1.baidu.com/it/u=3118418006,770648774&fm=26&fmt=auto&gp=0.jpg"
-        :size="150"
-      />
-    </div>
-    <h1 class="title">Cheri的小窝</h1>
-    <Menu />
-    <Contact />
-    <p class="footer">
-      黑ICP备17001719号
-    </p>
+  <div class="siteAside-container" v-if="data">
+      <Avatar :src="data.avatar" :size="150" />
+      <h1 class="title">{{ data.siteTitle }}</h1>
+      <Menu />
+      <Contact v-if="data" />
+      <p v-if="data" class="footer">{{ data.icp }}</p>
   </div>
 </template>
 
@@ -28,12 +21,14 @@ import Avatar from "@/components/Avatar";
 import Menu from "./Menu";
 import Contact from "./Contact";
 import "@/styles/global.less";
+import { mapState } from "vuex";
 export default {
   components: {
     Avatar,
     Menu,
     Contact,
   },
+  computed: mapState("setting", ["data"]),
 };
 </script>
 
@@ -48,14 +43,14 @@ export default {
   overflow-x: hidden;
   overflow-y: auto;
 }
-.avatar-container{
+.avatar-container {
   margin: 0 auto;
 }
-.footer{
+.footer {
   text-align: center;
   font-size: 12px;
 }
-.title{
+.title {
   font-size: 1.2em;
   color: #fff;
   text-align: center;
