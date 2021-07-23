@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-06-15 15:48:17
- * @LastEditTime: 2021-07-16 18:24:30
+ * @LastEditTime: 2021-07-23 17:42:23
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\my-site\my-site\src\router\routes.js
@@ -16,29 +16,50 @@ import BlogDetail from "@/views/Blog/detail"
 export default [{
     name: "Home",
     path: "/",
-    component: Home
+    component: Home,
+    meta: {
+        title: "首页"
+    }
 }, {
     name: "About",
     path: "/about",
-    component: About
+    component: About,
+    meta: {
+        title: "关于我"
+    }
 }, {
     name: "Blog",
     path: "/blog",
-    component: Blog
+    component: Blog,
+    meta: {
+        title: "文章"
+    }
 }, {
     name: "CategoryBlog",
     path: "/blog/cate/:categoryId",
-    component: Blog
+    component: Blog,
+    meta: {
+        title: "文章"
+    }
 }, {
     name: "BlogDetail",
     path: "/blog/:id",
-    component: BlogDetail
+    component: BlogDetail,
+    meta: {
+        title: "文章详情"
+    }
 }, {
     name: "Project",
     path: "/project",
-    component: Project
+    component: Project,
+    meta: {
+        title: "项目&效果"
+    }
 }, {
     name: "Message",
     path: "/message",
-    component: Message
+    component: Message,
+    meta: {
+        title: "留言板",
+    }
 }, ]

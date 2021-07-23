@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-16 18:21:42
- * @LastEditTime: 2021-07-18 21:03:52
+ * @LastEditTime: 2021-07-23 19:05:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\my-site\my-site\src\views\Blog\detail.vue
@@ -28,6 +28,7 @@ import BlogDetail from "./components/BlogDetail";
 import BlogToc from "./components/BlogToc";
 import BlogComment from "./components/BlogComment";
 import mainScroll from "@/mixins/mainScroll";
+import { titleControler } from "@/utils";
 export default {
   components: {
     Layout,
@@ -38,7 +39,9 @@ export default {
   mixins: [fetchData(null), mainScroll("mainContainer")],
   methods: {
     async fetchData() {
-      return await getBlog(this.$route.params.id);
+      const resp = await getBlog(this.$route.params.id);
+      titleControler.setRouteTitle(resp.title);
+      return resp;
     },
   },
   updated() {

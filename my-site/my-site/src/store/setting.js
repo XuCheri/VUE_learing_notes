@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-22 21:34:28
- * @LastEditTime: 2021-07-22 22:56:19
+ * @LastEditTime: 2021-07-23 19:00:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\my-site\my-site\src\store\setting.js
@@ -9,6 +9,9 @@
 import {
     getSetting
 } from "@/api/setting";
+import {
+    titleControler
+} from "@/utils";
 
 export default {
     namespaced: true,
@@ -40,6 +43,9 @@ export default {
                 link.type = "images/x-icon";
                 link.href = resp.favicon;
                 document.querySelector("head").appendChild(link);
+            }
+            if (resp.siteTitle) {
+                titleControler.setSiteTitle(resp.siteTitle);
             }
         }
     }
