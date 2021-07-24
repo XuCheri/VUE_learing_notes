@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-11 20:49:08
- * @LastEditTime: 2021-07-18 21:14:20
+ * @LastEditTime: 2021-07-24 19:07:56
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\my-site\my-site\src\mock\blog.js
@@ -19,28 +19,31 @@ Mock.mock("/api/blogtype", "get", {
   }, ],
 });
 
+
+
 Mock.mock(/^\/api\/blog(\?.+)?$/, "get", function (options) {
   const query = qs.parse(options.url);
+  const data = {
+    "total|2000-3000": 0,
+    [`rows|${query.limit || 10}`]: [{
+      id: "@guid",
+      title: "@ctitle",
+      description: "@cparagraph(1, 10)",
+      category: {
+        "id|1-10": 0,
+        name: "分类@id",
+      },
+      "scanNumber|0-3000": 0,
+      "commentNumber|0-300": 30,
+      "thumb|1": ["@image(300x250, @color, @color, @title()", null],
+      createDate: `@date('T')`,
+    }, ],
+  }
 
   return Mock.mock({
     code: 0,
     msg: "",
-    data: {
-      "total|2000-3000": 0,
-      [`rows|${query.limit || 10}`]: [{
-        id: "@guid",
-        title: "@ctitle",
-        description: "@cparagraph(1, 10)",
-        category: {
-          "id|1-10": 0,
-          name: "分类@id",
-        },
-        "scanNumber|0-3000": 0,
-        "commentNumber|0-300": 30,
-        "thumb|1": ["@image(300x250, @color, @color, @title()", null],
-        createDate: `@date('T')`,
-      }, ],
-    },
+    data: data,
   });
 });
 
@@ -293,10 +296,10 @@ Mock.mock("/api/comment", "post", {
     content: "@cparagraph(1, 10)",
     createDate: Date.now(),
     "avatar|1": [
-      "https://qiheizhiya.oss-cn-shenzhen.aliyuncs.com/image/avatar6.jpg",
-      "https://qiheizhiya.oss-cn-shenzhen.aliyuncs.com/image/avatar4.jpg",
-      "https://qiheizhiya.oss-cn-shenzhen.aliyuncs.com/image/avatar8.jpg",
-      "https://qiheizhiya.oss-cn-shenzhen.aliyuncs.com/image/avatar2.jpg",
+      "https://img0.baidu.com/it/u=3311900507,1448170316&fm=26&fmt=auto&gp=0.jpg",
+      "https://img1.baidu.com/it/u=2681504758,1624692466&fm=26&fmt=auto&gp=0.jpg",
+      "https://img2.baidu.com/it/u=1077360284,2857506492&fm=26&fmt=auto&gp=0.jpg",
+      "https://img2.baidu.com/it/u=1325995315,4158780794&fm=26&fmt=auto&gp=0.jpg",
     ],
   },
 })

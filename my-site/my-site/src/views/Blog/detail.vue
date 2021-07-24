@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-16 18:21:42
- * @LastEditTime: 2021-07-23 19:05:47
+ * @LastEditTime: 2021-07-24 19:22:07
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\my-site\my-site\src\views\Blog\detail.vue
@@ -40,6 +40,10 @@ export default {
   methods: {
     async fetchData() {
       const resp = await getBlog(this.$route.params.id);
+      if (!resp) {
+        this.$router.push("/404");
+        return;
+      }
       titleControler.setRouteTitle(resp.title);
       return resp;
     },

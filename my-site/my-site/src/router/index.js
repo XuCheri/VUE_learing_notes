@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-06-15 15:43:43
- * @LastEditTime: 2021-07-23 18:56:04
+ * @LastEditTime: 2021-07-24 17:21:43
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\my-site\my-site\src\router\index.js
@@ -13,7 +13,9 @@ import {
   titleControler
 } from "@/utils";
 
-Vue.use(VueRouter);
+if (!window.VueRouter) {
+  Vue.use(VueRouter);
+}
 
 
 

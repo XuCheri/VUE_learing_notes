@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-15 15:24:33
- * @LastEditTime: 2021-07-23 20:37:20
+ * @LastEditTime: 2021-07-24 19:09:50
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\my-site\my-site\src\views\Project\index.vue
@@ -41,17 +41,22 @@
         </p>
       </div>
     </div>
+    <Empty v-if="data.length === 0 && !loading" />
   </div>
 </template>
 
 <script>
 import mainScroll from "@/mixins/mainScroll.js";
 import { mapState } from "vuex";
+import Empty from "@/components/Empty";
 export default {
   mixins: [mainScroll("projectContainer")],
   computed: mapState("project", ["loading", "data"]),
   created() {
     this.$store.dispatch("project/fetchProject");
+  },
+  components: {
+    Empty,
   },
 };
 </script>
