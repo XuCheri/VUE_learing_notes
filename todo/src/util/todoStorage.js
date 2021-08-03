@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-08-02 22:07:59
- * @LastEditTime: 2021-08-02 22:59:05
+ * @LastEditTime: 2021-08-03 22:43:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\todo\src\util\todoStorage.js
@@ -37,4 +37,16 @@ export function fetch() {
  */
 export function save(todos) {
     localStorage.setItem(LOCAL_KEY, JSON.stringify(todos));
+}
+
+
+export function filter(todos, visibility = "all") {
+    if (visibility === "all") {
+        return todos;
+    } else if (visibility === "active") {
+        return todos.filter((it) => !it.completed);
+    } else if (visibility === "completed") {
+        return todos.filter((it) => it.completed);
+    }
+    throw new Error("invalid visibility value");
 }
