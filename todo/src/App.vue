@@ -1,15 +1,14 @@
 <!--
  * @Author: your name
  * @Date: 2021-08-02 21:58:24
- * @LastEditTime: 2021-08-03 22:56:42
+ * @LastEditTime: 2021-08-04 23:04:31
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\todo\src\App.vue
 -->
+
 <template>
   <div id="app">
-    <h1>{{ todoRef.length }}</h1>
-
     <section class="todoapp">
       <header class="header">
         <h1>todos</h1>
@@ -22,26 +21,41 @@
           @keyup.enter="addToDo"
         />
       </header>
-      <section class="main">
-        <input id="toggle-all" class="toggle-all" type="checkbox" />
+      <section class="main" v-show="todoRef.length > 0">
+        <input
+          id="toggle-all"
+          class="toggle-all"
+          type="checkbox"
+          v-model="allDoneRef"
+        />
         <label for="toggle-all">Mark all as complete</label>
         <ul class="todo-list">
           <li
             class="todo"
-            :class="{ completed: todo.completed }"
+            :class="{
+              completed: todo.completed,
+              editing: todo === editingTodoRef,
+            }"
             v-for="todo in filteredTodosRef"
             :key="todo.id"
           >
             <div class="view">
               <input class="toggle" type="checkbox" v-model="todo.completed" />
-              <label>{{ todo.title }}</label>
-              <button class="destroy"></button>
+              <label @dblclick="editTodo(todo)">{{ todo.title }}</label>
+              <button class="destroy" @click="remove(todo)"></button>
             </div>
-            <input class="edit" type="text" />
+            <input
+              v-model="todo.title"
+              class="edit"
+              type="text"
+              @blur="doneEdit(todo)"
+              @keyup.enter="doneEdit(todo)"
+              @keyup.escape="cancelEdit(todo)"
+            />
           </li>
         </ul>
       </section>
-      <footer class="footer">
+      <footer class="footer" v-show="todoRef.length > 0">
         <span class="todo-count">
           <strong>{{ remainingRef }}</strong>
           <span>item{{ remainingRef === 1 ? "" : "s" }} left</span>
@@ -69,6 +83,7 @@
           class="clear-completed"
           style="display: none"
           v-show="completedRef > 0"
+          @click="removeCompleted"
         >
           Clear completed
         </button>
@@ -81,6 +96,8 @@
 import useToDoList from "./composition/useToDoList";
 import useNewToDo from "./composition/useNewToDo";
 import useFilter from "./composition/useFilter";
+import useEditTodo from "./composition/useEditTodo";
+import useRemoveTodo from "./composition/useRemoveTodo";
 export default {
   setup() {
     const { todoRef } = useToDoList();
@@ -88,6 +105,8 @@ export default {
       todoRef,
       ...useNewToDo(todoRef),
       ...useFilter(todoRef),
+      ...useEditTodo(todoRef),
+      ...useRemoveTodo(todoRef),
     };
   },
 };
