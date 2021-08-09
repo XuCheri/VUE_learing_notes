@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-06-07 16:28:01
- * @LastEditTime: 2021-08-05 21:18:15
+ * @LastEditTime: 2021-08-08 18:17:14
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \VUE_learing_notes\README.md
@@ -3131,4 +3131,574 @@ vue3不再使用Object.defineProperty的方式定义完成数据响应式，而�
 除了Proxy本身效率比Object.defineProperty更高之外，由于不必递归遍历所有属性，而是直接得到一个Proxy。所以在vue3中，对数据的访问是动态的，当访问某个属性的时候，再动态的获取和设置，这就极大的提升了在组件初始阶段的效率。
 同时，由于Proxy可以监控到成员的新增和删除，因此，在vue3中新增成员、删除成员、索引访问等均可以触发重新渲染，而这些在vue2中是难以做到的。
 ```
+
+## 模板中的变化
+### v-model
+
+`vue2`比较让人诟病的一点就是提供了两种双向绑定：`v-model`和`.sync`，在`vue3`中，去掉了`.sync`修饰符，只需要使用`v-model`进行双向绑定即可。
+
+为了让`v-model`更好的针对多个属性进行双向绑定，`vue3`作出了以下修改
+
+- 当对自定义组件使用`v-model`指令时，绑定的属性名由原来的`value`变为`modelValue`，事件名由原来的`input`变为`update:modelValue`
+
+  ```html
+  <!-- vue2 -->
+  <ChildComponent :value="pageTitle" @input="pageTitle = $event" />
+  <!-- 简写为 -->
+  <ChildComponent v-model="pageTitle" />
+
+  <!-- vue3 -->
+  <ChildComponent
+    :modelValue="pageTitle"
+    @update:modelValue="pageTitle = $event"
+  />
+  <!-- 简写为 -->
+  <ChildComponent v-model="pageTitle" />
+  ```
+
+- 去掉了`.sync`修饰符，它原本的功能由`v-model`的参数替代
+
+  ```html
+  <!-- vue2 -->
+  <ChildComponent :title="pageTitle" @update:title="pageTitle = $event" />
+  <!-- 简写为 -->
+  <ChildComponent :title.sync="pageTitle" />
+
+  <!-- vue3 -->
+  <ChildComponent :title="pageTitle" @update:title="pageTitle = $event" />
+  <!-- 简写为 -->
+  <ChildComponent v-model:title="pageTitle" />
+  ```
+
+- `model`配置被移除
+
+- 允许自定义`v-model`修饰符
+
+  vue2 无此功能
+
+  <img src="http://mdrs.yuanjin.tech/img/20201008163022.png" alt="image-20201008163021918" style="zoom:50%;" />
+
+### v-if v-for
+
+`v-if` 的优先级 现在高于 `v-for`
+
+### key
+
+- 当使用`<template>`进行`v-for`循环时，需要把`key`值放到`<template>`中，而不是它的子元素中
+
+- 当使用`v-if v-else-if v-else`分支的时候，不再需要指定`key`值，因为`vue3`会自动给予每个分支一个唯一的`key`
+
+  即便要手工给予`key`值，也必须给予每个分支唯一的`key`，**不能因为要重用分支而给予相同的 key**
+
+### Fragment
+
+`vue3`现在允许组件出现多个根节点
+
+## ReactivityApi
+> reactivity api: https://v3.vuejs.org/api/reactivity-api
+
+### 获取响应式数据
+
+| API        | 传入                      | 返回             | 备注                                                         |
+| :--------- | ------------------------- | ---------------- | ------------------------------------------------------------ |
+| `reactive` | `plain-object`            | `对象代理`       | 深度代理对象中的所有成员                                     |
+| `readonly` | `plain-object` or `proxy` | `对象代理`       | 只能读取代理对象中的成员，不可修改                           |
+| `ref`      | `any`                     | `{ value: ... }` | 对value的访问是响应式的<br />如果给value的值是一个对象，<br />则会通过`reactive`函数进行代理<br />如果已经是代理，则直接使用代理 |
+| `computed` | `function`                | `{ value: ... }` | 当读取value值时，<br />会**根据情况**决定是否要运行函数      |
+
+应用：
+
+- 如果想要让一个对象变为响应式数据，可以使用`reactive`或`ref`
+- 如果想要让一个对象的所有属性只读，使用`readonly`
+- 如果想要让一个非对象数据变为响应式数据，使用`ref`
+- 如果想要根据已知的响应式数据得到一个新的响应式数据，使用`computed`
+
+笔试题1：下面的代码输出结果是什么？
+
+```js
+import { reactive, readonly, ref, computed } from "vue";
+
+const state = reactive({
+  firstName: "Xu Ming",
+  lastName: "Deng",
+});
+const fullName = computed(() => {
+  console.log("changed");
+  return `${state.lastName}, ${state.firstName}`;
+});
+console.log("state ready");
+console.log("fullname is", fullName.value);
+console.log("fullname is", fullName.value);
+const imState = readonly(state);
+console.log(imState === state);
+
+const stateRef = ref(state);
+console.log(stateRef.value === state);
+
+state.firstName = "Cheng";
+state.lastName = "Ji";
+
+console.log(imState.firstName, imState.lastName);
+console.log("fullname is", fullName.value);
+console.log("fullname is", fullName.value);
+
+const imState2 = readonly(stateRef);
+console.log(imState2.value === stateRef.value);
+
+```
+
+笔试题2：按照下面的要求完成函数
+
+```js
+function useUser(){
+  // 在这里补全函数
+  return {
+    user, // 这是一个只读的用户对象，响应式数据，默认为一个空对象
+    setUserName, // 这是一个函数，传入用户姓名，用于修改用户的名称
+    setUserAge, // 这是一个函数，传入用户年龄，用户修改用户的年龄
+  }
+}
+```
+
+笔试题3：按照下面的要求完成函数
+
+```js
+function useDebounce(obj, duration){
+  // 在这里补全函数
+  return {
+    value, // 这里是一个只读对象，响应式数据，默认值为参数值
+    setValue // 这里是一个函数，传入一个新的对象，需要把新对象中的属性混合到原始对象中，混合操作需要在duration的时间中防抖
+  }
+}
+```
+
+
+
+### 监听数据变化
+
+**watchEffect**
+
+```js
+const stop = watchEffect(() => {
+  // 该函数会立即执行，然后追中函数中用到的响应式数据，响应式数据变化后会再次执行
+})
+
+// 通过调用stop函数，会停止监听
+stop(); // 停止监听
+```
+
+**watch**
+
+```js
+// 等效于vue2的$watch
+
+// 监听单个数据的变化
+const state = reactive({ count: 0 })
+watch(() => state.count, (newValue, oldValue) => {
+  // ...
+}, options)
+
+const countRef = ref(0);
+watch(countRef, (newValue, oldValue) => {
+  // ...
+}, options)
+
+// 监听多个数据的变化
+watch([() => state.count, countRef], ([new1, new2], [old1, old2]) => {
+  // ...
+});
+```
+
+**注意：无论是`watchEffect`还是`watch`，当依赖项变化时，回调函数的运行都是异步的（微队列）**
+
+应用：除非遇到下面的场景，否则均建议选择`watchEffect`
+
+- 不希望回调函数一开始就执行
+- 数据改变时，需要参考旧值
+- 需要监控一些回调函数中不会用到的数据
+
+笔试题: 下面的代码输出结果是什么？
+
+```js
+import { reactive, watchEffect, watch } from "vue";
+const state = reactive({
+  count: 0,
+});
+watchEffect(() => {
+  console.log("watchEffect", state.count);
+});
+watch(
+  () => state.count,
+  (count, oldCount) => {
+    console.log("watch", count, oldCount);
+  }
+);
+console.log("start");
+setTimeout(() => {
+  console.log("time out");
+  state.count++;
+  state.count++;
+});
+state.count++;
+state.count++;
+
+console.log("end");
+
+```
+
+
+
+### 判断
+
+| API          | 含义                                                         |
+| ------------ | ------------------------------------------------------------ |
+| `isProxy`    | 判断某个数据是否是由`reactive`或`readonly`                   |
+| `isReactive` | 判断某个数据是否是通过`reactive`创建的<br />详细:https://v3.vuejs.org/api/basic-reactivity.html#isreactive |
+| `isReadonly` | 判断某个数据是否是通过`readonly`创建的                       |
+| `isRef`      | 判断某个数据是否是一个`ref`对象                              |
+
+
+
+### 转换
+
+**unref**
+
+等同于：`isRef(val) ? val.value : val`
+
+应用：
+
+```js
+function useNewTodo(todos){
+  todos = unref(todos);
+  // ...
+}
+```
+
+
+
+**toRef**
+
+得到一个响应式对象某个属性的ref格式
+
+```js
+const state = reactive({
+  foo: 1,
+  bar: 2
+})
+
+const fooRef = toRef(state, 'foo'); // fooRef: {value: ...}
+
+fooRef.value++
+console.log(state.foo) // 2
+
+state.foo++
+console.log(fooRef.value) // 3
+```
+
+**toRefs**
+
+把一个响应式对象的所有属性转换为ref格式，然后包装到一个`plain-object`中返回
+
+```js
+const state = reactive({
+  foo: 1,
+  bar: 2
+})
+
+const stateAsRefs = toRefs(state)
+/*
+stateAsRefs: not a proxy
+{
+  foo: { value: ... },
+  bar: { value: ... }
+}
+*/
+```
+
+应用：
+
+```js
+setup(){
+  const state1 = reactive({a:1, b:2});
+  const state2 = reactive({c:3, d:4});
+  return {
+    ...state1, // lost reactivity
+    ...state2 // lost reactivity
+  }
+}
+
+setup(){
+  const state1 = reactive({a:1, b:2});
+  const state2 = reactive({c:3, d:4});
+  return {
+    ...toRefs(state1), // reactivity
+    ...toRefs(state2) // reactivity
+  }
+}
+// composition function
+function usePos(){
+  const pos = reactive({x:0, y:0});
+  return pos;
+}
+
+setup(){
+  const {x, y} = usePos(); // lost reactivity
+  const {x, y} = toRefs(usePos()); // reactivity
+}
+```
+
+### 降低心智负担
+
+所有的`composition function`均以`ref`的结果返回，以保证`setup`函数的返回结果中不包含`reactive`或`readonly`直接产生的数据
+
+```js
+function usePos(){
+  const pos = reactive({ x:0, y:0 });
+  return toRefs(pos); //  {x: refObj, y: refObj}
+}
+function useBooks(){
+  const books = ref([]);
+  return {
+    books // books is refObj
+  }
+}
+function useLoginUser(){
+  const user = readonly({
+    isLogin: false,
+    loginId: null
+  });
+  return toRefs(user); // { isLogin: refObj, loginId: refObj }  all ref is readonly
+}
+
+setup(){
+  // 在setup函数中，尽量保证解构、展开出来的所有响应式数据均是ref
+  return {
+    ...usePos(),
+    ...useBooks(),
+    ...useLoginUser()
+  }
+}
+```
+
+## CompositionApi
+> 面试题：composition api相比于option api有哪些优势？
+
+不同于reactivity api，composition api提供的函数很多是与组件深度绑定的，不能脱离组件而存在。
+
+### setup
+
+```js
+// component
+export default {
+  setup(props, context){
+    // 该函数在组件属性被赋值后立即执行，早于所有生命周期钩子函数
+    // props 是一个对象，包含了所有的组件属性值
+    // context 是一个对象，提供了组件所需的上下文信息
+  }
+}
+```
+
+context对象的成员
+
+| 成员  | 类型 | 说明                    |
+| ----- | ---- | ----------------------- |
+| attrs | 对象 | 同`vue2`的`this.$attrs` |
+| slots | 对象 | 同`vue2`的`this.$slots` |
+| emit  | 方法 | 同`vue2`的`this.$emit`  |
+
+### 生命周期函数
+
+| vue2 option api | vue3 option api       | vue 3 composition api           |
+| --------------- | --------------------- | ------------------------------- |
+| beforeCreate    | beforeCreate          | 不再需要，代码可直接置于setup中 |
+| created         | created               | 不再需要，代码可直接置于setup中 |
+| beforeMount     | beforeMount           | onBeforeMount                   |
+| mounted         | mounted               | onMounted                       |
+| beforeUpdate    | beforeUpdate          | onBeforeUpdate                  |
+| updated         | updated               | onUpdated                       |
+| beforeDestroy   | ==改== beforeUnmount  | onBeforeUnmount                 |
+| destroyed       | ==改==unmounted       | onUnmounted                     |
+| errorCaptured   | errorCaptured         | onErrorCaptured                 |
+| -               | ==新==renderTracked   | onRenderTracked                 |
+| -               | ==新==renderTriggered | onRenderTriggered               |
+
+新增钩子函数说明：
+
+| 钩子函数        | 参数          | 执行时机                       |
+| --------------- | ------------- | ------------------------------ |
+| renderTracked   | DebuggerEvent | 渲染vdom收集到的每一次依赖时   |
+| renderTriggered | DebuggerEvent | 某个依赖变化导致组件重新渲染时 |
+
+DebuggerEvent:
+
+- target: 跟踪或触发渲染的对象
+- key: 跟踪或触发渲染的属性
+- type: 跟踪或触发渲染的方式
+
+### 面试题参考答案
+
+面试题：composition api相比于option api有哪些优势？
+
+> 从两个方面回答：
+>
+> 1. 为了更好的逻辑复用和代码组织
+> 2. 更好的类型推导
+
+```
+有了composition api，配合reactivity api，可以在组件内部进行更加细粒度的控制，使得组件中不同的功能高度聚合，提升了代码的可维护性。对于不同组件的相同功能，也能够更好的复用。
+相比于option api，composition api中没有了指向奇怪的this，所有的api变得更加函数式，这有利于和类型推断系统比如TS深度配合。
+```
+
+## 共享数据
+### vuex方案
+
+安装`vuex@4.x`
+
+两个重要变动：
+
+- 去掉了构造函数`Vuex`，而使用`createStore`创建仓库
+- 为了配合`composition api`，新增`useStore`函数获得仓库对象
+
+### global state
+
+由于`vue3`的响应式系统本身可以脱离组件而存在，因此可以充分利用这一点，轻松制造多个全局响应式数据
+
+<img src="http://mdrs.yuanjin.tech/img/20201026171519.png" alt="image-20201026171519761" style="zoom:50%;" />
+
+```js
+// store/useLoginUser 提供当前登录用户的共享数据
+// 以下代码仅供参考
+import { reactive, readonly } from "vue";
+import * as userServ from "../api/user"; // 导入api模块
+// 创建默认的全局单例响应式数据，仅供该模块内部使用
+const state = reactive({ user: null, loading: false });
+// 对外暴露的数据是只读的，不能直接修改
+// 也可以进一步使用toRefs进行封装，从而避免解构或展开后响应式丢失
+export const loginUserStore = readonly(state);
+
+// 登录
+export async function login(loginId, loginPwd) {
+  state.loading = true;
+  const user = await userServ.login(loginId, loginPwd);
+  state.loginUser = user;
+  state.loading = false;
+}
+// 退出
+export async function loginOut() {
+  state.loading = true;
+  await userServ.loginOut();
+  state.loading = false;
+  state.loginUser = null;
+}
+// 恢复登录状态
+export async function whoAmI() {
+  state.loading = true;
+  const user = await userServ.whoAmI();
+  state.loading = false;
+  state.loginUser = user;
+}
+```
+
+
+
+### Provide&Inject
+
+在`vue2`中，提供了`provide`和`inject`配置，可以让开发者在高层组件中注入数据，然后在后代组件中使用
+
+<img src="http://mdrs.yuanjin.tech/img/20201026173949.png" alt="image-20201026173949874" style="zoom: 40%;" />
+
+除了兼容`vue2`的配置式注入，`vue3`在`composition api`中添加了`provide`和`inject`方法，可以在`setup`函数中注入和使用数据
+
+<img src="http://mdrs.yuanjin.tech/img/20201026174039.png" alt="image-20201026174039594" style="zoom:40%;" />
+
+考虑到有些数据需要在整个vue应用中使用，`vue3`还在应用实例中加入了`provide`方法，用于提供整个应用的共享数据
+
+```js
+creaetApp(App)
+  .provide("foo", ref(1))
+  .provide("bar", ref(2))
+	.mount("#app");
+```
+
+<img src="http://mdrs.yuanjin.tech/img/20201026174611.png" alt="image-20201026174611477" style="zoom:40%;" />
+
+因此，我们可以利用这一点，在整个vue应用中提供共享数据
+
+```js
+// store/useLoginUser 提供当前登录用户的共享数据
+// 以下代码仅供参考
+import { readonly, reactive, inject } from "vue";
+const key = Symbol(); // Provide的key
+
+// 在传入的vue应用实例中提供数据
+export function provideStore(app) {
+  // 创建默认的响应式数据
+  const state = reactive({ user: null, loading: false });
+  // 登录
+  async function login(loginId, loginPwd) {
+    state.loading = true;
+    const user = await userServ.login(loginId, loginPwd);
+    state.loginUser = user;
+    state.loading = false;
+  }
+  // 退出
+  async function loginOut() {
+    state.loading = true;
+    await userServ.loginOut();
+    state.loading = false;
+    state.loginUser = null;
+  }
+  // 恢复登录状态
+  async function whoAmI() {
+    state.loading = true;
+    const user = await userServ.whoAmI();
+    state.loading = false;
+    state.loginUser = user;
+  }
+  // 提供全局数据
+  app.provide(key, {
+    state: readonly(state), // 对外只读
+    login,
+    loginOut,
+    whoAmI,
+  });
+}
+
+export function useStore(defaultValue = null) {
+  return inject(key, defaultValue);
+}
+
+// store/index
+// 应用所有store
+import { provideStore as provideLoginUserStore } from "./useLoginUser";
+// 继续导入其他共享数据模块...
+// import { provideStore as provideNewsStore } from "./useNews"
+
+// 提供统一的数据注入接口
+export default function provideStore(app) {
+  provideLoginUserStore(app);
+  // 继续注入其他共享数据
+  // provideNewsStore(app);
+}
+
+// main.js
+import { createApp } from "vue";
+import provideStore from "./store";
+const app = createApp(App);
+provideStore(app);
+app.mount("#app");
+
+```
+
+
+
+### 对比
+
+|              | vuex | global state | Provide&Inject |
+| ------------ | ---- | ------------ | -------------- |
+| 组件数据共享 | ✅    | ✅            | ✅              |
+| 可否脱离组件 | ✅    | ✅            | ❌              |
+| 调试工具     | ✅    | ❌            | ✅              |
+| 状态树       | ✅    | 自行决定     | 自行决定       |
+| 量级         | 重   | 轻           | 轻             |
 
